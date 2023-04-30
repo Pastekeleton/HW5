@@ -5,6 +5,7 @@ const express = require("express");
 const PORT = process.env.PORT || 8000;
 
 const app = express();
+const db = require('./queries');
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
@@ -21,3 +22,5 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+app.get('/links', db.getLinks);
