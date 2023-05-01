@@ -30,3 +30,5 @@ app.listen(PORT, () => {
 
 app.get('/links', db.getLinks);
 app.post('/new', db.addLink);
+app.post('/update', db.updateLink);
+app.post('/remove', db.removeLink);

@@ -32,9 +32,33 @@ const getLinks = (request, response) => {
 }
 
 const updateLink = (request, response) => {
+  const id = request.body.id
+  const newName = response.body.name
+  const newURL = response.body.URL
+
+  pool.query('UPDATE links SET name = $1 SET URL = $2 WHERE id = $3', 
+  [newName, newURL, id], 
+  (error, results) =>{
+    if (error) {
+      throw error;
+    }
+    response.status(201).send(`Link updated`)
+  },
+  )
 }
 
 const removeLink = (request, response) => {
+  const id = request.body.id
+
+  pool.query('DELETE FROM links WHERE id = $1', 
+  [id], 
+  (error, results) =>{
+    if (error) {
+      throw error;
+    }
+    response.status(201).send(`Link removed`)
+  },
+  )
 }
 
 module.exports = {
