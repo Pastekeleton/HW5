@@ -7,16 +7,22 @@ const pool = new Pool({
   port: 5432,
 })
 
-const addLink = (id, name, URL) => {
-  pool.query('INSERT INTO links(id, name, URL) VALUES ${(id, name, URL)}', (error, result)=>{
-    if (error){
+const addLink = (request, response) => {
+  const name = request.body.name
+  const URL = request.body.URL
+  
+  pool.query('INSERT INTO links (name, URL) VALUES ($1, $2)', 
+  [name, URL], 
+  (error, results) =>{
+    if (error) {
       throw error;
     }
-    res.status(200).json(result.rows)
-  })
+    response.status(201).send(`Link added with ID: ${results.insertId}`)
+  },
+  )
 }
 
-const getLinks = (req, res) => {
+const getLinks = (request, response) => {
   pool.query('SELECT * FROM links ORDER BY id ASC', (error, result)=>{
     if (error){
       throw error;
@@ -25,22 +31,10 @@ const getLinks = (req, res) => {
   })
 }
 
-const updateLink = (id, name, URL, newid, newName, newURL) => {
-  pool.query('UPDATE links SET id = 'newid' SET name = 'newName' SET URL = 'newURL' WHERE id = 'id' WHERE name = 'name' WHERE URL = 'URL'', (error, result)=>{
-    if (error){
-      throw error;
-    }
-    res.status(200).json(result.rows)
-  })
+const updateLink = (request, response) => {
 }
 
-const removeLink = (id, name, URL) => {
-  pool.query('DELETE FROM links WHERE linkName= 'name' linkid = 'id' linkURL = 'URL'', (error, result)=>{
-    if (error){
-      throw error;
-    }
-    res.status(200).json(result.rows)
-  })
+const removeLink = (request, response) => {
 }
 
 module.exports = {

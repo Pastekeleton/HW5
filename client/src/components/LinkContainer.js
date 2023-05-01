@@ -15,6 +15,31 @@ const LinkContainer = (props) => {
     
   }
   
+  const postLink = async () => {
+    let testLink = {
+      name: "Test 5/1/23",
+      URL: "test.com"
+    }
+    try {
+      let response = await fetch('/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testLink)
+      })
+      console.log(response)
+      let message = response.text()
+      console.log(message)
+    } catch (error){
+      console.log(error)
+    }
+  }
+
+  useEffect(() =>{
+    postLink()
+  }, [])
+
   return (
     <div className="container">
       <h1>My Favorite Links</h1>
