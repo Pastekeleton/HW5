@@ -45,4 +45,7 @@ const removeLink = (id, name, URL) => {
 
 module.exports = {
   getLinks,
+  addLink,
+  updateLink,
+  removeLink
 }
